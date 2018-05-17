@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>组件</title>
+	<script src="js/vue.js"></script>
+</head>
+<body>
+	<div id="box">
+		<menu1></menu1>
+		<menu1></menu1>
+		<com a="dsd"></com>
+		<com :b="true"></com>
+		<com :c="['abc','bcd']"></com>
+		<com :d="{name:'zhangsan',age:'20'}"></com>
+	</div>
+
+	<script type="text/javascript">
+		
+		Vue.component("menu1",{
+			template:"<p>组件一</p>"
+		});
+
+		var com1 = {
+			props:{
+				a :{
+					type:String,
+					required :false
+				},
+				b :{
+					type:Boolean
+				},
+				c :{
+					type:Array
+				},
+				d :{
+					type:Object
+				}
+			}, 
+			/*data (){
+				return {
+					a:"abx"
+				}
+			},*/
+			template:"<div>组件二{{a}}{{b}}{{c}}{{d}}</div>"
+		}
+		new Vue({
+			el:"#box",
+			components:{
+				com:com1
+			}
+		});
+	</script>
+</body>
+</html>

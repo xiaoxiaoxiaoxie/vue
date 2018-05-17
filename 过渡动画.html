@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>guodudonghua</title>
+	<script src="js/vue.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<style type="text/css">
+		.demo{
+			width: 200px;
+			height: 200px;
+			background: #eee;
+		}
+		/* .v-enter,.v-leave-to{
+			opacity: 0;
+		}
+		.v-enter-active,.v-leave-active{
+			transition: all 1s;
+		} */
+	/* 	.v-enter-active{
+		animation: dh 1s;
+	}
+	.v-leave-active{
+		animation: dh 1s reverse;
+	}
+	@keyframes dh{
+		0%{
+			transform: translateX(-100%);
+		}
+		100%{
+			transform: translateX(0%);
+		}
+	} */
+	</style>
+</head>
+<body>
+	<div id="box">
+		<button @click="flag=!flag">切换</button>
+		<transition name="v" enter-active-class="animated fandeInLeft" leave-active-class="animated fandeOutLeft">
+			<div class="demo" v-if="flag">这是一个demo</div>
+		</transition>
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el:"#box",
+			data:{
+				flag:false
+			}
+		});
+	</script>
+</body>
+</html>

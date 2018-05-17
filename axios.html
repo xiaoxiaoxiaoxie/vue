@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>axios</title>
+	<script src="js/vue.js"></script>
+	<script src="js/axios.js"></script>
+	<style type="text/css">
+		*{margin:0;padding: 0;}
+		ul,ol{
+			list-style: none;
+		}
+		ul>li{
+			border: 1px solid;
+			width: 400px;
+			margin: 10px 20px;
+		}
+		ol li{
+			float: left;
+
+			margin-right: 20px;
+		}
+		.clean{
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<input type="text" v-model="comname"><br>
+		<input type="text" v-model="comdesc"><br>
+		<input type="button" value="添加" @click="add">
+		<ul>
+			<li v-for='item in list'>
+				<ol class="clean">
+					<li >{{item.id}}</li>
+					<li>{{item.name}}</li>
+					<li>{{item.description}}</li>
+				</ol>
+				<button @click="del(item.id)">删除</button>
+				<button @click="mode(item.id)">修改</button>
+			</li>
+
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		
+		new Vue({
+			el:"#box",
+			data:{
+				list:[],
+				comname:'',
+				comdesc:""
+			},
+			created(){
+				this.getjson();
+			},
+			methods:{
+				getjson(){
+					axios.get("http://localhost:3000/companies",{
+						params:{
+							id_gte:7
+						}
+					}).then((res)=>{
+						this.list=res.data;
+					});
+				},
+				add(){
+					axios.post("http://localhost:3000/companies",{
+						name:this.comname,
+						description:this.comdesc
+					},{
+						headers:{
+							"Content-Type":"application/json"
+						}
+					}).then((res)=>{
+						console.log(res);
+						this.getjson();
+					});
+				},
+				del(id){
+					axios.delete("http://localhost:3000/companies/"+id).then((res)=>{
+						console.log(res);
+						this.getjson();
+					});
+				},
+				mode(id){
+					axios.patch("http://localhost:3000/companies/"+id,{
+						name:this.comname,
+						description:this.comdesc
+					},{
+						
+						headers:{
+							"Content-Type":"application/json"
+						}
+						
+					});
+				}
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>五星好评</title>
+	<script src="js/vue.js"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.star{
+			font-size: 40px;
+			float: left;
+			cursor: pointer;	
+			/*color: red;*/
+		}
+		.currstar{
+			color:red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<star></star>
+	</div>
+	<script type="text/javascript">
+		var star ={
+			
+			data(){
+				return{
+				
+					list:[
+						{
+							title:"★",
+							flag:false
+						},
+						{
+							title:"★",
+							flag:false
+						},
+						{
+							title:"★",
+							flag:false
+						},
+						{
+							title:"★",
+							flag:false
+						},
+						{
+							title:"★",
+							flag:false
+						}
+					]
+				}
+			},
+			methods:{
+				change(item,index){
+					for (var i = 0; i < 5; i++) {
+						 if (i > index) {
+						 	 this.list[i].flag=false;
+						 }else{
+						 	 this.list[i].flag=true;
+						 }
+					}
+					
+				},
+			},
+			template:`
+						<ul >
+							<li class="star" v-for="(item,index) in list" :class="{'currstar':item.flag===true}"   @click="change(item,index)">{{item.title}}</li>您的评价为：{{index+1}}星
+
+						</ul>
+					  
+					`
+		};
+		new Vue ({
+			el :"#box",
+			
+			components:{
+				star
+			}
+		});
+	</script>
+</body>
+</html>

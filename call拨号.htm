@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拨号</title>
+	<script src="js/vue.js"></script>
+	<style type="text/css">
+	*{margin: 0;padding: 0;}
+		li{
+			float: left;
+			list-style: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<screen ></screen>
+		<keyboard></keyboard>
+	</div>
+	<script type="text/javascript">
+		var busVm = new Vue();
+		var button1={
+			props:["n"],
+			template:`<button>{{n}}</button>	`
+		}
+
+		var screen ={
+			data(){
+				return{
+					num:""
+				}
+			},
+			template:`<div>
+						<input type="text" :value="num"/>
+						<button1 n="del" @click.native="del()"></button1>
+						<button1 n='call' @click.native="call()"></button1>
+					</div>`,
+			components:{
+				button1
+			},
+			mounted(){
+				busVm.$on("shuru",function (v) {   //监听emit事件
+					this.num +=v;
+				}.bind(this));
+			},
+			methods:{
+				del(){
+				 this.num = this.num.substr(0,this.num.length-1);
+				},
+				call(){
+					this.num="call......";
+				}
+			}
+		}
+
+		var keyboard ={
+			template:`<ul>
+						<li v-for="n in 10" >
+							<button1 :n="n-1" @click.native="call(n-1)"></button1>
+						</li>
+					 </ul>`,
+			methods:{
+				call(index){
+					busVm.$emit("shuru",index);   //绑定事件
+				}
+			},
+			components:{
+				button1
+			}
+		}
+		
+		new Vue({
+			el:"#box",
+			components:{
+				screen,keyboard
+			}
+
+		});
+	</script>
+</body>
+</html>

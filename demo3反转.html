@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>反转</title>
+	<script src="js/vue.js"></script>
+</head>
+<body>
+	<div id="box">
+		
+			<input type="text" v-model ="message" />{{strchange}}<br>
+			<p>{{str}}</p>
+			<button @click = "reverse">反转</button>
+		
+	</div>
+	
+	<script type="text/javascript">
+		let vm = new Vue({
+			el : "#box",
+			data : {
+				str : "hello word",
+				message:""
+			},
+			methods : {
+				reverse (){
+					return this.str = this.str.split(" ").reverse().join("");
+				},
+				computed : {
+					strchange (){
+						return this.message.split("").reverse().join("");
+					}
+				}
+			}
+		});
+	</script>
+</body>
+</html>

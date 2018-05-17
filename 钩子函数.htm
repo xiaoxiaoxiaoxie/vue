@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>钩子调色板</title>
+	<script src="js/vue.js"></script>
+	<style type="text/css">
+		.box{
+			width: 200px;
+			height: 200px;
+			border: 1px solid;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<input type="text" ref="txt">
+		<div class="box" :style="{background:color}"></div>
+		<input type="range" min="0" max="255"  v-model="r"/>
+		<input type="range" min="0" max="255" v-model="g"/>
+		<input type="range" min="0" max="255" v-model="b"/>
+	</div>
+
+	<script type="text/javascript">
+		new Vue({
+			el:"#box",
+			data:{
+				color:'#fff',
+				r:0,
+				g:0,
+				b:0
+			},
+			mounted(){
+				this.$refs.txt.focus();
+			},
+			updated(){
+				this.color =` rgb(${this.r},${this.g},${this.b})`;
+			}
+		});
+	</script>
+</body>
+</html>

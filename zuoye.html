@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>作业</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<script src="js/vue.js"></script>
+	<style type="text/css">
+	*{margin: 0;padding: 0;}
+		#box{
+			margin: 100px auto;
+			width: 300px;
+			height: auto;
+		}/*
+		.line{
+			height: 30px;
+			width: 300px;
+			border: 1px solid #e5e5e5;
+		}*/
+		.text{
+			outline: none;
+			height: 28px; 
+			border: none;
+			width: 250px;
+		}
+		ul{
+			height: auto;
+			width: 300px;
+			margin: 0;
+		}
+		li,.ls{
+			list-style: none;
+			background: pink;
+			border: 1px solid #e5e5e5;
+			border-top: none;
+			height: 40px;
+			line-height: 40px;
+		}
+		.ls>i:nth-child(2){
+			right: 0;
+			margin-left: 100px;
+		}
+		i{
+			font-style: normal;
+			margin-right: 10px;
+			cursor: pointer;
+		}
+		span{
+			cursor: pointer;
+		}
+		.line span{
+			font-size: 12px;
+			display: block;
+			float: left;
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<!-- <div class="line">
+			<span>全选</span><input class="text" type="text" v-model ="str" placeholder="接下来要做什么">
+		</div> -->
+		<div class="ls">
+			<span class="glyphicon glyphicon-chevron-down" style="color: #e5e5e5 ;width:30px;text-align: center;"></span> 
+			<input class="text" type="text" v-model ="str" placeholder="接下来要做什么" @keyup.enter = "add">
+		</div>
+		<ul >
+			<li v-for ="(item,index) in getList" style="position: relative;"  v-bind:value="item.title">
+				<input type="checkbox" v-model ="item.flag" @change="change" style="margin:0 10px;" ></input>{{item.text}}<i class="glyphicon glyphicon-remove"  style="color: #f00;position: absolute;right: 10px;top: 15px;" @click ="del(index)"></i>
+			</li>
+		</ul>
+		<div class="ls line" style="position: relative;">
+			<span>{{obj.num}}项未完成</span>
+			<span @click = "type ='all'">全选</span> 
+			<span @click = "type = 'complete'">已完成</span>
+			<span @click = "type = 'uncomplete'">未完成</span>
+			<span style="position: absolute;right: 10px;">清空已完成</span>
+		</div>
+	</div>
+	<script type="text/javascript">
+
+		let vm = new Vue({
+			el : "#box",
+			data: {
+				str :"",
+				list :[
+					{
+						text:"aa",
+						flag : false
+					},
+					{
+						text:"bb",
+						flag : true
+					}
+				],
+				type :"all",
+				obj :{
+					num :0
+				}
+			},
+			created (){//在实例完成后立即被调用，为了最先获取到list的长度
+				this.obj.num = this.list.filter((item)=>{
+					return !item.flag;
+				}).length;	
+			},
+			/*watch :{//侦听器,固定写法第一个为函数，第二个为true
+				list:{
+					handler(newvalue,old){
+						this.obj.num = newvalue.filter((item)=>{
+							return !item.flag;
+						}).length;	
+						
+					},
+					deep:true
+				}
+			},*/
+			methods : {
+				add (item){
+					this.list.push(this.str);
+					this.str ="";
+				},
+				del (index){
+					this.list.splice(index,1);
+				},
+				/*delall(index,item){
+					if (this.type === "complete") {
+						
+						if (item.flag) {
+							this.list.splice(index,1);
+						}
+					}
+				},*/
+				change(){
+					this.obj.num = this.list.filter((item)=>{
+						return !item.flag;
+					}).length;
+				}
+			},
+			computed : {
+				getList (){
+					if ( this.type === "all") {
+						return this.list;
+					}else if ( this.type === "complete") {
+						return this.list.filter((item)=>{
+							return item.flag;
+						});
+					}else{
+						return this.list.filter((item)=>{
+							return !item.flag;
+						});
+					}
+				}
+			}
+
+		});
+	</script>
+
+	
+</body>
+</html>

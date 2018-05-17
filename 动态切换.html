@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态切换</title>
+	<script src="js/vue.js"></script>
+	<style type="text/css">
+		.box{
+			width: 200px;
+			height: 200px;
+			border: 1px solid;
+			margin-top: 10px;
+		}
+		ul{
+			margin: 0;padding: 0;
+			list-style: none;
+		}
+		li{
+			float: left;
+			margin-left: 20px;
+			cursor: pointer;
+		}
+		.red{
+			color: red;
+		}
+		.clearboth{
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+	<!-- <div id="box">
+		<button v-for ="(item,index) in list" @click="sw(index)">{{item}}</button>
+		<p :is="cn"></p>
+	</div>
+	
+	<script type="text/javascript">
+		var busWm = new Vue();
+		var one ={
+			template:`<p>one contents</p>`
+		}
+	
+		var two = {
+			template:`<p>two contents</p>`
+		}
+		var three = {
+			template:`<p>three contents</p>`
+		}
+	
+		new Vue({
+			el:"#box",
+			data:{
+				list:["one","two","three"],
+				cn:"one"
+			},
+			components:{
+				one,two,three
+			},
+			methods:{
+				sw (index) {
+					if (index === 0) 
+						this.cn="one";
+					else if (index === 1) 
+						this.cn="two";
+					else
+						this.cn="three";
+				}
+			}
+	
+		});
+	</script> -->
+
+
+	<!-- 第二种方式 动态组件 -->
+
+
+	<!-- <div id="box">
+		<button v-for="(item,index) in list" @click="sw(index)">{{item}}</button>
+		<keep-alive>
+			<div :is=contents[curIndex]></div>
+		</keep-alive>
+	</div>
+	
+	<script type="text/javascript">
+		
+		var busWm = new Vue();
+	
+		new Vue({
+			el:"#box",
+			data:{
+				list:["one","two","three"],
+				curIndex:0,
+				contents:[
+					{
+						template:`<p>one content<input type="text"/></p>`
+					},
+					{
+						template:`<p>two contents<input type="text"/></p>`
+					},
+					{
+						template:`<p>three contents<input type="text"/></p>`
+					}
+	
+				]	
+			},
+			methods:{
+				sw(index){
+					this.curIndex =index;
+				}
+			}
+		});
+	</script> -->
+
+
+	<!-- 第三种 -->
+		<div id="box">
+			<tab :titles="['aa','bb','cc']" :contents="['one content','two contents','three contents']"></tab>
+
+		</div>
+
+		<script type="text/javascript">
+			var tab={
+				props:["titles","contents"],
+				data(){
+					return{
+						curr:0,
+						arr:[]
+					}
+				},
+				created(){
+					this.contents.forEach((item)=>{
+						this.arr.push({
+							template:`<div class="box">${item}</div>`
+						})
+					})
+				},
+				template:`<ul>
+							<li v-for="(item,index) in titles" :class="{'red':curr===index}" @click="ss(index)">{{item}}</li>
+							<keep-alive>
+								 <component :is="arr[curr]" class="clearboth"></component>
+							</keep-alive>
+						</ul>`,
+				methods:{
+					ss(index){
+						this.curr=index;
+					}
+				}
+			}
+			new Vue({
+				
+				el:"#box",
+				components:{
+					tab
+				}
+			});
+		</script>
+
+</body>
+</html>

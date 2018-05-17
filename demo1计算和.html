@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算两数的和</title>
+	<script src="./js/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model.lazy.number = "num1"/>+
+		<input type="text" v-model.lazy.number= "num2"/>={{num1 + num2}}
+		<!-- <input type="text" v-model = "num1 + num2"> -->
+	</div>
+	<script type="text/javascript">
+		
+		var vm = new Vue({
+			el:"#app",
+			data : {
+				num1 :"",
+				num2 : ""
+			}
+		});
+
+	</script>
+</body>
+</html>

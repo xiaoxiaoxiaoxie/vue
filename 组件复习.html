@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>复习组件</title>
+	<script src="js/vue.js"></script>
+</head>
+<body>
+	<div id="box">
+		<com></com>
+		<com1></com1>
+	</div>
+
+	<script type="text/javascript">
+		var busVm =new Vue();
+		var com={
+			data(){
+				return{
+					n:"hello"
+				}
+			},
+			template:`<h3>{{n}}</h3>`,
+			mounted(){
+				busVm.$on("sendinfo",function(v){
+					this.n =v;
+				}.bind(this));
+			}
+		}
+		var com1 ={
+			methods:{
+				send(){
+					busVm.$emit("on","hahaha");
+				}
+			},
+			template:`<h4 @click="send">haha</h4>`
+		}
+		new Vue({
+			el :"#box",
+			components:{
+				com,com1
+			}
+		});
+	</script>
+</body>
+</html>

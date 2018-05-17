@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/vue.js"></script>
+</head>
+<body>
+	<div id="box">{{n}}
+		<button @click = "inc">自增</button>
+	</div>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el : "#box",
+			data:{
+				n:1
+			},
+			methods :{
+				inc (){
+					this.n++;
+				}
+			}
+		});
+	</script>
+</body>
+</html>

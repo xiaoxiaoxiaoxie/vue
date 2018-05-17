@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>进度条</title>
+	<script src="js/vue.js"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		.progress{
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<com v-for ="(item,index) in list" :jd="item" :key="index" :n ="(index + 1)" @ok ="wancheng"></com>
+		<div>第{{n}}个完成</div>
+	</div>
+	<script type="text/javascript">
+		var com = {
+			props:["jd","n"],
+			data (){
+				return{
+					jindu:this.jd
+				}
+			},
+			created (){
+				var timer = setInterval(()=>{
+					this.jindu++;
+					if (this.jindu === 100) {
+						clearInterval(timer);
+						this.$emit("ok",this.n);
+					}
+				},200);
+			},
+			template : `<div class="progress">
+						  <div class="progress-bar" :style="{'width': jindu+'%'}"> {{jindu}}%</div>
+						</div>`
+		};
+		new Vue({
+			el:"#box",
+			data:{
+				list :["20","79",'65','64'],
+				n:0
+			},
+			components:{
+				com
+			},
+			methods:{
+				wancheng(num){
+					this.n =num;
+				}
+			}
+			
+		});
+	</script>
+</body>
+</html>
