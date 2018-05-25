@@ -22,10 +22,10 @@
 	<a href="http://www.baidu.com">baidu</a>
 	<script type="text/javascript">
 			var odiv =document.getElementById("box");
-			odiv.addEventListener("touchstart",function(e){
+			/*odiv.addEventListener("touchstart",function(e){
 				this.style.display ="none";
 				e.preventDefault();
-			})
+			})*/
 			odiv.addEventListener("touchmove",function(e){
 				this.innerHtml = e.targetTouches.length;
 			})
